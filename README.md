@@ -26,5 +26,5 @@ _Mogelijke to do's_
 * [Luchtfoto](https://www.pdok.nl/nl/producten/pdok-services/overzicht-urls/l) (alleen de 25 cm infrarood en RGB foto zijn open data)
 * [Satellietportaal](https://www.spaceoffice.nl/nl/satellietdataportaal/)
 
-!(images/team2.jpg)
+![Team 2](/images/team2.jpg)     
 Jonas, Jan, Sebastiaan, Rik, Willy & Mark
