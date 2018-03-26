@@ -2,5 +2,5 @@
 * [Open data portaal RUG](http://opendata.rug.nl/)
 * [Actueel Hoogtebestand Nederland (AHN3)](https://www.pdok.nl/nl/ahn3-downloads)
 * [Basisregistratie Grootschalige Topografie (BGT)](https://www.pdok.nl/nl/producten/pdok-downloads/download-basisregistratie-grootschalige-topografie)
-* [luchtfoto (alleen de 25 cm infrarood en RGB foto zijn open data)](https://www.pdok.nl/nl/producten/pdok-services/overzicht-urls/l)
+* [Luchtfoto](https://www.pdok.nl/nl/producten/pdok-services/overzicht-urls/l) (alleen de 25 cm infrarood en RGB foto zijn open data)
 * [Satellietportaal](https://www.spaceoffice.nl/nl/satellietdataportaal/)
