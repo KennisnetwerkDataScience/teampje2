@@ -1,0 +1,6 @@
+* Image Segmentation with Tensorflow using CNNs and Conditional Random Fields: http://warmspringwinds.github.io/tensorflow/tf-slim/2016/12/18/image-segmentation-with-tensorflow-using-cnns-and-conditional-random-fields/
+* [Open data portaal RUG] (http://opendata.rug.nl/)
+* [Actueel Hoogtebestand Nederland (AHN3)](https://www.pdok.nl/nl/ahn3-downloads)
+* [Basisregistratie Grootschalige Topografie (BGT)](https://www.pdok.nl/nl/producten/pdok-downloads/download-basisregistratie-grootschalige-topografie)
+* [luchtfoto (alleen de 25 cm infrarood en RGB foto zijn open data)](https://www.pdok.nl/nl/producten/pdok-services/overzicht-urls/l)
+* [Satellietportaal](https://www.spaceoffice.nl/nl/satellietdataportaal/)
