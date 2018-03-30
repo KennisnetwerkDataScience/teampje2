@@ -15,7 +15,7 @@ Dit is mijn eerste poging om een machine learning algoritme te maken dat ondersc
 
 De eerste stap is om de benodigde packages te installeren en te laden.
 
-```{r echo = FALSE, warning = FALSE, message = FALSE}
+```{r warning = FALSE, message = FALSE}
 # install.packages("rgdal", "raster", "caret", "e1071", "randomForest")
 library(rgdal)
 library(raster)
