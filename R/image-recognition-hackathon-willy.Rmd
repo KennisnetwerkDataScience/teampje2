@@ -1,0 +1,114 @@
+---
+title: "Image recognition hackathon"
+author: "Willy Tadema"
+date: "30 maart 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Land en water herkennen in luchtfoto's
+
+Dit is mijn eerste poging om een machine learning algoritme te maken dat onderscheid kan maken tussen land en water in luchtfoto's.
+
+De eerste stap is om de benodigde packages te installeren en te laden.
+
+```{r echo = FALSE, warning = FALSE, message = FALSE}
+# install.packages("rgdal", "raster", "caret", "e1071", "randomForest")
+library(rgdal)
+library(raster)
+library(caret)
+library(e1071)
+library(randomForest)
+```
+
+Lees vervolgens de trainingsdata in.
+
+```{r}
+img <- brick("../opdracht 2/tegels 100x100/data/163400.0_563200.0.tif")
+names(img) <- c('red', 'green', 'blue')
+train <- rasterToPoints(img, spatial = TRUE)@data
+```
+
+Voeg de labels toe aan de trainingsdata.
+
+```{r}
+labels <- brick("../opdracht 2/tegels 100x100/labels/WaterVlakkenRasterUitBGT_163400.0_563200.0.tif")
+labels[labels == 0] <- 1 # Water
+labels[is.na(labels)] <- 0 # Land
+names(labels) <- 'class'
+train$class <- rasterToPoints(labels, spatial = TRUE)@data$class
+table(train$class)
+```
+
+De trainingsset bevat nu 1 miljoen rijen. Dat is te veel voor mijn laptopje...     
+Neem een sample van 10.000 rijen, de helf land en de helft water.
+
+```{r}
+undersample_ds <- function(x, classCol, nsamples_class){
+  for (i in 1:length(unique(x[, classCol]))){
+    class.i <- unique(x[, classCol])[i]
+    if((sum(x[, classCol] == class.i) - nsamples_class) != 0){
+      x <- x[-sample(which(x[, classCol] == class.i), 
+                     sum(x[, classCol] == class.i) - nsamples_class), ]
+    }
+  }
+  return(x)
+}
+
+train_sample <- undersample_ds(train, "class", 5000)
+table(train_sample$class)
+```
+
+Train een random forest model.
+
+```{r}
+model <- train(as.factor(class) ~ red + green + blue, method = "rf", data = train_sample)
+model$results
+```
+
+Lees de testdata in, inclusief de labels.
+
+```{r}
+img_test <- brick("../opdracht 2/tegels 100x100/data/163600.0_563400.0.tif")
+names(img_test) <- c('red', 'green', 'blue')
+test <- rasterToPoints(img_test, spatial = TRUE)@data
+
+labels_test <- brick("../opdracht 2/tegels 100x100/labels/WaterVlakkenRasterUitBGT_163600.0_563400.0.tif")
+labels_test[labels_test == 0] <- 1 # Water
+labels_test[is.na(labels_test)] <- 0 # Land
+names(labels_test) <- 'class'
+test$class <- rasterToPoints(labels_test, spatial = TRUE)@data$class
+```
+
+Bereken de predictions en maak een confusion matrix.
+
+```{r}
+pred <- predict(model, test)
+confusionMatrix(pred, test$class)
+```
+De testluchtfoto:
+
+```{r echo = FALSE, warning = FALSE, message = FALSE}
+plotRGB(img_test)
+```
+          
+De correcte classificatie van land en water:
+
+```{r echo = FALSE, warning = FALSE, message = FALSE}
+plot(labels_test, col = gray.colors(10, start = 0.9, end = 0.3, gamma = 2.2, alpha = NULL), legend = FALSE, axes = FALSE, frame.plot = FALSE, useRaster = FALSE)
+```
+          
+De classificatie volgens mijn random forest model:
+
+```{r echo = FALSE, warning = FALSE, message = FALSE}
+img_pred <- labels_test
+img_pred$class <- pred
+plot(img_pred, col = gray.colors(10, start = 0.9, end = 0.3, gamma = 2.2, alpha = NULL), legend = FALSE, axes = FALSE, frame.plot = FALSE, useRaster = FALSE)
+```
+
+Gebruikte bronnen:        
+* [Image Classification with RandomForests in R (and QGIS)](http://amsantac.co/blog/en/2015/11/28/classification-r.html)               
+* [Why it is important to work with a balanced classification dataset](http://amsantac.co/blog/en/2016/09/20/balanced-image-classification-r.html)              
