@@ -18,6 +18,9 @@ Rik: Deep learning, TensorFlow
 _Mogelijke to do's_   
 *	Meer data generen? Foto’s bewerken?    
 
+Machine learning benadering. Foto opknippen in blokjes. 
+Met infrarood geen machine learning nodig?
+
 ## Handige links
 * [Image Segmentation with Tensorflow using CNNs and Conditional Random Fields](http://warmspringwinds.github.io/tensorflow/tf-slim/2016/12/18/image-segmentation-with-tensorflow-using-cnns-and-conditional-random-fields/)
 * [Open data portaal RUG](http://opendata.rug.nl/)
